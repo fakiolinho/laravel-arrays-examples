@@ -105,6 +105,10 @@ Result:
 		2 => 'Jane Doe',
 		3 => 'Jack Doe'
 	];
+
+Equivalent Helper Function:
+
+	array_build($array, callable $callback);
 	
 Notes:
 
@@ -149,6 +153,10 @@ Example 2:
 Result:
 	
 	$array2 = ['id' => 2, 'name' => 'Jane Doe'];
+
+Equivalent Helper Function:
+
+	array_collapse($array);
 	
 Notes:
 
@@ -213,6 +221,10 @@ Result:
 		]
 	];
 	
+Equivalent Helper Function:
+
+	array_divide($array);
+	
 ## dot()
 
 Flatten a multi-dimensional associative array with dots.
@@ -260,6 +272,10 @@ Result:
 		'prefix1.id' => 2,
 		'prefix1.name' => 'Jane Doe'
 	];
+	
+Equivalent Helper Function:
+
+	array_dot($array, $prepend = '');
 	
 ## except()
 
@@ -313,6 +329,10 @@ Result:
 	
 	$array2 = ['name' => 'John Doe'];
 	
+Equivalent Helper Function:
+
+	array_except($array, $keys);
+	
 Notes:
 
 The $keys parameter can be a single key or an array of keys. Of course the keys can be integers or strings.
@@ -356,6 +376,10 @@ Result:
 		'Baby Doe',
 		'Junior Doe'
 	];
+
+Equivalent Helper Function:
+
+	array_fetch($array, $key);
 	
 Notes:
 
@@ -397,6 +421,10 @@ Result:
 	
 	[1,2,3]
 	
+Equivalent Helper Function:
+
+	array_first($array, callable $callback, $default = null);
+	
 Notes:
 
 The callback function is a test for the array parameter. The first element of the array that passes the test is returned. In case there is nothing returned the third parameter which is a callback is returned.
@@ -437,6 +465,12 @@ Result:
 	
 	[1,2,3]
 	
+Equivalent Helper Function:
+
+	array_last($array, $callback, $default = null);
+	
+Notes:
+	
 The callback function is a test for the array parameter. The last element of the array that could pass the test is returned. In case there is nothing returned the third parameter which is a callback is returned. This method uses the first() merhod, first calculates the first element that passes the test and then uses the array_reverse method to return the array in reverse order and takes the first one from it.
 
 ## flatten()
@@ -476,6 +510,10 @@ Example 2:
 Result:
 	
 	$array1 = [1, 'John Doe', 2, 'Jane Doe', 'smart', 'pretty'];
+	
+Equivalent Helper Function:
+
+	array_flatten($array);
 	
 ## forget()
 
@@ -521,6 +559,10 @@ Result:
 		['id' => 2]
 	];
 	
+Equivalent Helper Function:
+
+	array_forget(&$array, $keys);
+	
 Notes:
 
 The $keys parameter can be a key or an array of keys. Be careful because this method affects the array itself on which the method applied.
@@ -562,6 +604,10 @@ Example 2:
 Result:
 	
 	$result = [1,2,3];
+
+Equivalent Helper Function:
+
+	array_get($array, $key, $default = null);
 	
 Notes:
 
@@ -604,6 +650,10 @@ Example 2:
 Result:
 	
 	$result = false;
+	
+Equivalent Helper Function:
+
+	array_has($array, $key);
 	
 ## only()
 
@@ -649,6 +699,10 @@ Result:
 		1 => ['id' => 2, 'name' => 'Jane Doe'],
 		2 => ['id' => 3, 'name' => 'Jack Doe']
 	];
+
+Equivalent Helper Function:
+
+	array_only($array, $keys);
 	
 Notes:
 
@@ -714,6 +768,10 @@ Result:
 		3 => 'Jack Doe'
 	];
 	
+Equivalent Helper Function:
+
+	array_pluck($array, $value, $key = null);
+	
 Notes:
 
 This method is very useful and can create an array of values for specific elements key. Even better if the third parameter is assigned to another key it can create an array with key/value pairs the values of the selected keys.
@@ -769,6 +827,10 @@ Result:
 	
 	$array2 = [1,2,3];
 	
+Equivalent Helper Function:
+
+	array_pull(&$array, $key, $default = null);
+	
 Notes:
 
 This method returns the selected value but affects also the array by removing it. If the element doesn't exist then a fallback is returned. Be careful that the values of the old array retain their old keys.
@@ -817,6 +879,10 @@ Example 2:
 Result:
 
 	$array1 = [1,2,3];
+	
+Equivalent Helper Function:
+
+	array_set(&$array, $key, $value);
 	
 Notes:
 
@@ -870,6 +936,10 @@ Result:
 		0 => ['id' => 1, 'name' => 'John Doe']
 	];
 	
+Equivalent Helper Function:
+
+	array_sort($array, callable $callback);
+	
 ## where()
 
 Filter the array using the given callback.
@@ -911,6 +981,10 @@ Result:
 	$array2 = [
 		2 => ['id' => 3, 'name' => 'Jack Doe']
 	];
+	
+Equivalent Helper Function:
+
+	array_where($array, callable $callback);
 	
 Notes:
 
