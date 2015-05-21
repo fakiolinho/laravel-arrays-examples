@@ -1,15 +1,35 @@
-# laravel-arrays-examples
-Laravel5 Arrays Examples to help you grasp at once Laravel arrays goodies
+# Arrays
+Laravel5 offers a great way to manipulate arrays through the `Illuminate\Support\Arr` class and its great variety of methods. We can manipulate arrays with very little code which is awesome. Let's see a fast example:
+
+	use Illuminate\Support\Arr;
+
+	$users = Arr::pluck([
+		['id' => 1, 'name' => 'John Doe'],
+		['id' => 2, 'name' => 'Jane Doe'],
+		['id' => 3, 'name' => 'Jack Doe'],
+	], 'name', 'id');
+	
+	$users = [
+		1 => 'John Doe',
+		2 => 'Jane Doe',
+		3 => 'Jack Doe'
+	];
+	
+	{!!Form::select('users', $users, null')!!}
+	
+How easy? We created an array with key/value pairs using their id,name values so fast. Now it is ready to apply it to the `Form::select()` method at once (as long as we use the Illuminate Html package of course).
+
+Below every method of Arr class is explained with some brief and declarative examples per method so you can grasp their functionality with ease.
 
 ## add()
 
 Add an element to an array by adding a key/value pair. You can also use "dot" notation if it doesn't exist.
 
-Method:
+**Method:**
 	
 	public static function add($array, $key, $value);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -20,7 +40,7 @@ Example 1:
 	
 	$array2 = Arr::add($array1, 'job', 'Web Developer');
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		'name' => 'John Doe',
@@ -28,7 +48,7 @@ Result:
 		'job' => 'Web Developer
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -39,14 +59,14 @@ Example 2:
 	
 	$array2 = Arr::add($array1, 'age', '25');
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		'name' => 'John Doe',
 		'age' => 32
 	];
 	
-Example 3:
+**Example 3:**
 
 	use Illuminate\Support\Arr;
 	
@@ -57,22 +77,24 @@ Example 3:
 	
 	$array2 = Arr::add($array1, 'kids.0', ['name' => 'Baby Doe', 'age' => 1]);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		'name' => 'John Doe',
 		'age' => 32,
 		'kids' => [
-			'name' => 'Baby Doe',
-			'age' => 1
+			[
+				'name' => 'Baby Doe',
+				'age' => 1
+			]
 		]
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_add($array, $key, $value);
 	
-Notes:
+**Notes:**
 
 In case you try to add a key which already exists then nothing happens and the old array is returned. Also take notice how the dot notation works to create a multidimensional array in an eye blink.
 
@@ -80,11 +102,11 @@ In case you try to add a key which already exists then nothing happens and the o
 
 Build a new array using a callback.
 
-Method:
+**Method:**
 	
 	public static function build($array, callable $callback);
 	
-Example:
+**Example:**
 
 	use Illuminate\Support\Arr;
 	
@@ -95,10 +117,10 @@ Example:
 	]; 
 	
 	$array2 = Arr::build($array1, function($key, $value) {
-					return [$value['id'], $value['name']];
-				});
+		return [$value['id'], $value['name']];
+	});
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		1 => 'John Doe',
@@ -106,11 +128,11 @@ Result:
 		3 => 'Jack Doe'
 	];
 
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_build($array, callable $callback);
 	
-Notes:
+**Notes:**
 
 Inside our fallback we create pairs that are going to become key/value pairs for the newly created array.
 	
@@ -118,11 +140,11 @@ Inside our fallback we create pairs that are going to become key/value pairs for
 
 Collapse an array of arrays into a single array.
 
-Method:
+**Method:**
 	
 	public static function collapse($array);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -134,12 +156,12 @@ Example 1:
 	
 	$array2 = Arr::collapse($array1);
 	
-Result:
+**Result:**
 	
 	$array2 = [1,2,3,4,5,6,7,8,9];
 	
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -150,15 +172,15 @@ Example 2:
 	
 	$array2 = Arr::collapse($array1);
 	
-Result:
+**Result:**
 	
 	$array2 = ['id' => 2, 'name' => 'Jane Doe'];
 
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_collapse($array);
 	
-Notes:
+**Notes:**
 
 In real life be careful because if you use arrays with strings as keys you might have the overwrite effect.
 
@@ -166,11 +188,11 @@ In real life be careful because if you use arrays with strings as keys you might
 
 Divide an array into two arrays. One with keys and the other with values.
 
-Method:
+**Method:**
 	
 	public static function divide($array);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -178,14 +200,14 @@ Example 1:
 	
 	$array2 = Arr::divide($array1);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		[0,1,2],
 		[1,2,3]
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -193,14 +215,14 @@ Example 2:
 	
 	$array2 = Arr::divide($array1);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		['id', 'name'],
 		[1, 'John Doe']
 	];
 	
-Example 3:
+**Example 3:**
 
 	use Illuminate\Support\Arr;
 	
@@ -211,7 +233,7 @@ Example 3:
 	
 	$array2 = Arr::divide($array1);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		[0,1],
@@ -221,7 +243,7 @@ Result:
 		]
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_divide($array);
 	
@@ -229,11 +251,11 @@ Equivalent Helper Function:
 
 Flatten a multi-dimensional associative array with dots.
 
-Method:
+**Method:**
 	
 	public static function dot($array, $prepend = '');
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -244,7 +266,7 @@ Example 1:
 	
 	$array2 = Arr::dot($array1);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		'0.id' => 1,
@@ -253,7 +275,7 @@ Result:
 		'1.name' => 'Jane Doe'
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -264,7 +286,7 @@ Example 2:
 	
 	$array2 = Arr::dot($array1, 'prefix');
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		'prefix0.id' => 1,
@@ -273,7 +295,7 @@ Result:
 		'prefix1.name' => 'Jane Doe'
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_dot($array, $prepend = '');
 	
@@ -281,11 +303,11 @@ Equivalent Helper Function:
 
 Get all of the given array except for a specified array of items.
 
-Method:
+**Method:**
 	
 	public static function except($array, $keys);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -296,13 +318,13 @@ Example 1:
 	
 	$array2 = Arr::except($array1, 0);
 	
-Result:
+**Result:**
 	
 	$array2 = [
-		'['id' => 2, 'name' => 'Jane Doe']
+		1 => ['id' => 2, 'name' => 'Jane Doe']
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -313,11 +335,11 @@ Example 2:
 	
 	$array2 = Arr::except($array1, [0, 1]);
 	
-Result:
+**Result:**
 	
 	$array2 = [];
 	
-Example 3:
+**Example 3:**
 
 	use Illuminate\Support\Arr;
 	
@@ -325,27 +347,27 @@ Example 3:
 	
 	$array2 = Arr::except($array1, 'id');
 	
-Result:
+**Result:**
 	
 	$array2 = ['name' => 'John Doe'];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_except($array, $keys);
 	
-Notes:
+**Notes:**
 
-The $keys parameter can be a single key or an array of keys. Of course the keys can be integers or strings.
+The `$keys` parameter can be a single key or an array of keys. Of course the keys can be integers or strings.
 
 ## fetch()
 
 Fetch a flattened array of a nested array element.
 
-Method:
+**Method:**
 	
 	public static function fetch($array, $key);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -370,18 +392,18 @@ Example 1:
 	
 	$array2 = Arr::fetch($array1, 'kids.name');
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		'Baby Doe',
 		'Junior Doe'
 	];
 
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_fetch($array, $key);
 	
-Notes:
+**Notes:**
 
 By using "dot" notation we search inside a multidimensional array to get values for a specific key.
 	
@@ -389,99 +411,55 @@ By using "dot" notation we search inside a multidimensional array to get values 
 
 Return the first element in an array passing a given truth test.
 
-Method:
+**Method:**
 	
 	public static function first($array, callable $callback, $default = null);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
 	$array1 = [1,2,3]; 
 	
-	Arr::first($array1, function($key, $value) {
+	$first = Arr::first($array1, function($key, $value) {
 		return $key == 0;
 	}, [1,2,3]);
 	
-Result:
+**Result:**
 	
-	1
+	$first = 1;
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
 	$array1 = [1,2,3]; 
 	
-	Arr::first($array1, function($key, $value) {
+	$first = Arr::first($array1, function($key, $value) {
 		return $key > 2;
 	}, [1,2,3]);
 	
-Result:
+**Result:**
 	
-	[1,2,3]
+	$first = [1,2,3];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_first($array, callable $callback, $default = null);
 	
-Notes:
+**Notes:**
 
 The callback function is a test for the array parameter. The first element of the array that passes the test is returned. In case there is nothing returned the third parameter which is a callback is returned.
-	
-## last()
-
-Return the last element in an array passing a given truth test.
-
-Method:
-	
-	public static function last($array, callable $callback, $default = null);
-	
-Example 1:
-
-	use Illuminate\Support\Arr;
-	
-	$array1 = [1,2,3]; 
-	
-	Arr::last($array1, function($key, $value) {
-		return $key == 0;
-	}, [1,2,3]);
-	
-Result:
-	
-	3
-	
-Example 2:
-
-	use Illuminate\Support\Arr;
-	
-	$array1 = [1,2,3]; 
-	
-	Arr::last($array1, function($key, $value) {
-		return $key > 2;
-	}, [1,2,3]);
-	
-Result:
-	
-	[1,2,3]
-	
-Equivalent Helper Function:
-
-	array_last($array, $callback, $default = null);
-	
-Notes:
-	
-The callback function is a test for the array parameter. The last element of the array that could pass the test is returned. In case there is nothing returned the third parameter which is a callback is returned. This method uses the first() merhod, first calculates the first element that passes the test and then uses the array_reverse method to return the array in reverse order and takes the first one from it.
 
 ## flatten()
 
 Flatten a multi-dimensional array into a single level.
 
-Method:
+**Method:**
 	
 	public static function flatten($array);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -492,11 +470,11 @@ Example 1:
 	
 	$array2 = Arr::flatten($array1);
 	
-Result:
+**Result:**
 	
 	$array1 = [1, 'John Doe', 2, 'Jane Doe'];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -507,11 +485,11 @@ Example 2:
 	
 	$array2 = Arr::flatten($array1);
 	
-Result:
+**Result:**
 	
 	$array1 = [1, 'John Doe', 2, 'Jane Doe', 'smart', 'pretty'];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_flatten($array);
 	
@@ -519,11 +497,11 @@ Equivalent Helper Function:
 
 Remove one or many array items from a given array using "dot" notation.
 
-Method:
+**Method:**
 	
 	public static function forget(&$array, $keys);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -534,14 +512,14 @@ Example 1:
 	
 	Arr::forget($array1, '0.id');
 	
-Result:
+**Result:**
 	
 	$array1 = [
 		['name' => 'John Doe'],
 		['id' => 2, 'name' => 'Jane Doe']
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -552,30 +530,30 @@ Example 2:
 	
 	Arr::forget($array1, ['0.id', '1.name']);
 	
-Result:
+**Result:**
 	
 	$array1 = [
 		['name' => 'John Doe'],
 		['id' => 2]
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_forget(&$array, $keys);
 	
-Notes:
+**Notes:**
 
-The $keys parameter can be a key or an array of keys. Be careful because this method affects the array itself on which the method applied.
+The `$keys` parameter can be a key or an array of keys. Be careful because this method affects the array itself on which the method applied.
 
 ## get()
 
 Get an item from an array using "dot" notation.
 
-Method:
+**Method:**
 	
 	public static function get($array, $key, $default = null);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -586,11 +564,11 @@ Example 1:
 	
 	$result = Arr::get($array1, '1.name');
 	
-Result:
+**Result:**
 	
 	$result = 'Jane Doe';
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -599,17 +577,17 @@ Example 2:
 		['id' => 2, 'name' => 'Jane Doe']
 	];
 	
-	$result = Arr::get($array1, '1.name', [1,2,3]);
+	$result = Arr::get($array1, '11.name', [1,2,3]);
 	
-Result:
+**Result:**
 	
 	$result = [1,2,3];
 
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_get($array, $key, $default = null);
 	
-Notes:
+**Notes:**
 
 The method can take a fallback value in case the 'dot' notation key we ask for doesn't exist.
 
@@ -617,11 +595,11 @@ The method can take a fallback value in case the 'dot' notation key we ask for d
 
 Check if an item exists in an array using "dot" notation.
 
-Method:
+**Method:**
 	
 	public static function has($array, $key);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -632,11 +610,11 @@ Example 1:
 	
 	$result = Arr::has($array1, '1.name');
 	
-Result:
+**Result:**
 	
 	$result = true;
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -647,23 +625,67 @@ Example 2:
 	
 	$result = Arr::has($array1, '2.name');
 	
-Result:
+**Result:**
 	
 	$result = false;
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_has($array, $key);
+
+## last()
+
+Return the last element in an array passing a given truth test.
+
+**Method:**
+	
+	public static function last($array, callable $callback, $default = null);
+	
+**Example 1:**
+
+	use Illuminate\Support\Arr;
+	
+	$array1 = [1,2,3]; 
+	
+	$last = Arr::last($array1, function($key, $value) {
+		return $key == 0;
+	}, [1,2,3]);
+	
+**Result:**
+	
+	$last = 3;
+	
+**Example 2:**
+
+	use Illuminate\Support\Arr;
+	
+	$array1 = [1,2,3]; 
+	
+	$last = Arr::last($array1, function($key, $value) {
+		return $key > 2;
+	}, [1,2,3]);
+	
+**Result:**
+	
+	$last = [1,2,3];
+	
+**Equivalent Helper Function:**
+
+	array_last($array, $callback, $default = null);
+	
+**Notes:**
+	
+The callback function is a test for the array parameter. The last element of the array that could pass the test is returned. In case there is nothing returned the third parameter which is a callback is returned. This method uses the `first()` merhod, first calculates the first element that passes the test and then uses the `array_reverse()` method to return the array in reverse order and takes the first one from it.
 	
 ## only()
 
 Get a subset of the items from the given array.
 
-Method:
+**Method:**
 	
 	public static function only($array, $keys);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -675,13 +697,13 @@ Example 1:
 	
 	$array2 = Arr::only($array1, 1);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		1 => ['id' => 2, 'name' => 'Jane Doe']
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -693,30 +715,30 @@ Example 2:
 	
 	$array2 = Arr::only($array1, [1,2]);
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		1 => ['id' => 2, 'name' => 'Jane Doe'],
 		2 => ['id' => 3, 'name' => 'Jack Doe']
 	];
 
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_only($array, $keys);
 	
-Notes:
+**Notes:**
 
-The $keys parameter can be a single key or an array of keys. In both cases the result is an array and all selected elements retain their keys as before.
+The `$keys` parameter can be a single key or an array of keys. In both cases the result is an array and all selected elements retain their keys as before.
 
 ## pluck()
 
 Pluck an array of values from an array.
 
-Method:
+**Method:**
 	
 	public static function pluck($array, $value, $key = null);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -728,11 +750,11 @@ Example 1:
 	
 	$array2 = Arr::pluck($array1, 'id');
 	
-Result:
+**Result:**
 	
 	$array2 = [1,2,3];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -744,11 +766,11 @@ Example 2:
 	
 	$array2 = Arr::pluck($array1, 'name');
 	
-Result:
+**Result:**
 	
 	$array2 = ['John Doe','Jane Doe','Jack Doe'];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -760,7 +782,7 @@ Example 2:
 	
 	$array2 = Arr::pluck($array1, 'name', 'id');
 	
-Result:
+**Result:**
 	
 	$array2 = [
 		1 => 'John Doe',
@@ -768,11 +790,11 @@ Result:
 		3 => 'Jack Doe'
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_pluck($array, $value, $key = null);
 	
-Notes:
+**Notes:**
 
 This method is very useful and can create an array of values for specific elements key. Even better if the third parameter is assigned to another key it can create an array with key/value pairs the values of the selected keys.
 
@@ -780,11 +802,11 @@ This method is very useful and can create an array of values for specific elemen
 
 Get a value from the array, and remove it.
 
-Method:
+**Method:**
 	
 	public static function pull(&$array, $key, $default = null);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -796,7 +818,7 @@ Example 1:
 	
 	$array2 = Arr::pull($array1, 0);
 	
-Result:
+**Result:**
 
 	$array1 = [
 		1 => ['id' => 2, 'name' => 'Jane Doe'],
@@ -805,7 +827,7 @@ Result:
 	
 	$array2 = ['id' => 1, 'name' => 'John Doe'];
 	
-Example 1:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -817,7 +839,7 @@ Example 1:
 	
 	$array2 = Arr::pull($array1, 4, [1,2,3]);
 	
-Result:
+**Result:**
 
 	$array1 = [
 		['id' => 1, 'name' => 'John Doe'],
@@ -827,11 +849,11 @@ Result:
 	
 	$array2 = [1,2,3];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_pull(&$array, $key, $default = null);
 	
-Notes:
+**Notes:**
 
 This method returns the selected value but affects also the array by removing it. If the element doesn't exist then a fallback is returned. Be careful that the values of the old array retain their old keys.
 
@@ -839,11 +861,11 @@ This method returns the selected value but affects also the array by removing it
 
 Set an array item to a given value using "dot" notation.
 
-Method:
+**Method:**
 	
 	public static function set(&$array, $key, $value);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -853,9 +875,9 @@ Example 1:
 		['id' => 3, 'name' => 'Jack Doe']
 	];
 	
-	Arr::set($array1, '4.id', 4);
+	Arr::set($array1, '3.id', 4);
 	
-Result:
+**Result:**
 
 	$array1 = [
 		['id' => 1, 'name' => 'John Doe'],
@@ -864,7 +886,7 @@ Result:
 		['id' => 4]
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -876,27 +898,27 @@ Example 2:
 	
 	Arr::set($array1, null, [1,2,3]);
 	
-Result:
+**Result:**
 
 	$array1 = [1,2,3];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_set(&$array, $key, $value);
 	
-Notes:
+**Notes:**
 
-If no $key parameter is passed then the whole array is replaced by the $value parameter. Be careful because this method updates the array itself.
+If no `$key` parameter is passed then the whole array is replaced by the $value parameter. Be careful because this method updates the array itself.
 
 ## sort()
 
 Sort the array using the given callback.
 
-Method:
+**Method:**
 	
 	public static function sort($array, callable $callback);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
@@ -906,7 +928,7 @@ Example 1:
 		return $value;
 	});
 	
-Result:
+**Result:**
 
 	$array2 = [
 		0 => 9,
@@ -914,7 +936,7 @@ Result:
 		1 => 68
 	];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -928,7 +950,7 @@ Example 2:
 		return $value['name'];
 	});
 	
-Result:
+**Result:**
 
 	$array2 = [
 		2 => ['id' => 3, 'name' => 'Jack Doe'],
@@ -936,7 +958,7 @@ Result:
 		0 => ['id' => 1, 'name' => 'John Doe']
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_sort($array, callable $callback);
 	
@@ -944,25 +966,25 @@ Equivalent Helper Function:
 
 Filter the array using the given callback.
 
-Method:
+**Method:**
 	
 	public static function where($array, callable $callback);
 	
-Example 1:
+**Example 1:**
 
 	use Illuminate\Support\Arr;
 	
 	$array1 = [1,2,3];
 	
-	$array2 = Arr::sort($array1, function($key, $value) {
+	$array2 = Arr::where($array1, function($key, $value) {
 		return $value > 2;
 	});
 	
-Result:
+**Result:**
 
 	$array2 = [2 => 3];
 	
-Example 2:
+**Example 2:**
 
 	use Illuminate\Support\Arr;
 	
@@ -972,20 +994,20 @@ Example 2:
 		['id' => 3, 'name' => 'Jack Doe']
 	];
 	
-	$array2 = Arr::sort($array1, function($key, $value) {
+	$array2 = Arr::where($array1, function($key, $value) {
 		return $value['id'] > 2;
 	});
 	
-Result:
+**Result:**
 
 	$array2 = [
 		2 => ['id' => 3, 'name' => 'Jack Doe']
 	];
 	
-Equivalent Helper Function:
+**Equivalent Helper Function:**
 
 	array_where($array, callable $callback);
 	
-Notes:
+**Notes:**
 
 Be careful because the returned arrays have elements that retain their keys from previous arrays.
